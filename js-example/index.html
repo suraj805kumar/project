@@ -1,0 +1,98 @@
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>JavaScript Page</title>
+    <script type="text/javascript">
+			//window.alert("The page is loading");
+			
+		function loadAllUser(){		
+		
+			getCallAjax('http://localhost:8888/myexample/user/getall', function(data){
+				console.log(data);
+				var json = JSON.parse(data);
+				console.log(json); 
+				
+				createTable("container", "user-table");
+				addRowToTable("user-table", "suraj", 1);
+				
+			});	
+		}
+		//https://www.w3schools.com/js/js_json_parse.asp
+		
+		// GET Method call using AJAX
+		function getCallAjax(url, success){
+			//alert('loadUser');
+			console.log('load User');
+			
+			var xhr = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+			xhr.open('GET', url);
+			xhr.onreadystatechange = function() {
+			console.log('Ready State:' + xhr.readyState + ' Status:' + xhr.status);
+				if (xhr.readyState > 3 && xhr.status == 200) {
+					success(xhr.responseText);
+				}
+			};
+			xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+			xhr.send();
+			return xhr;
+		}
+		
+		// create a table
+		function createTable(containerId, tableId){		
+		
+			// Create an element
+			var x = document.createElement("TABLE");
+			// Adding attribute to that element
+			x.setAttribute("id", tableId);
+			// Appending the element to the document
+			document.getElementById(containerId).appendChild(x);
+			//document.body.appendChild(x);
+
+			//var y = document.createElement("TR");
+			//y.setAttribute("id", "myTr");
+			//document.getElementById("myTable").appendChild(y);
+
+			//var z = document.createElement("TD");
+			//var t = document.createTextNode("cell");
+			//z.appendChild(t);
+			//document.getElementById("myTr").appendChild(z);		
+		}
+		
+		function addRowToTable(tableId, rowData, rownum){
+			var r = document.createElement("TR");
+			r.setAttribute("id", 'row'+rownum);
+			var t = document.createTextNode(rowData);
+			r.appendChild(t);
+			document.getElementById(tableId).appendChild(r);
+		}
+		
+		
+		
+	</script>
+	<link rel="stylesheet" type="text/css" href="myStyle.css"/>
+  </head>
+  <body>
+    <p>
+      <!-- <span onclick="document.body.style.backgroundColor = 'red';">Red</span> |
+      <span onclick="document.body.style.backgroundColor = 'white';">White</span> |
+      <span onclick="document.body.style.backgroundColor = 'green';">Green</span> |
+      <span onclick="document.body.style.backgroundColor = 'blue';">Blue</span> |
+      <span onclick="document.body.style.backgroundColor = 'yellow';">Yellow</span> -->
+	  
+	  <span onclick="document.getElementById('p2').style.backgroundColor = 'red';">Red</span> |
+      <span onclick="document.body.style.backgroundColor = 'white';">White</span> |
+      <span onclick="document.body.style.backgroundColor = 'green';">Green</span> |
+      <span onclick="document.body.style.backgroundColor = 'blue';">Blue</span> |
+      <span onclick="document.body.style.backgroundColor = 'yellow';">Yellow</span>
+	  
+    </p>
+    
+    <div id = "btn-cont" class = "btn-cont">
+        <input type = "button" onclick = "loadAllUser()" value = "Load All User"/>
+    </div>
+    
+    <div id = "container" class = "container">
+    </div>
+
+  </body>
+</html>
